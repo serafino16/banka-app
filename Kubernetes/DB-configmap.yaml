@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: banka-config
+  namespace: banka
+data:
+  DATABASE_HOST: banka-db-service
+  DATABASE_PORT: "5432"
+  DATABASE_NAME: PostgreSQL

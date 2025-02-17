@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: banka-nginx
+  namespace: banka
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: banka-nginx
+  template:
+    metadata:
+      labels:
+        app: banka-nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:alpine
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+          ports:
+            - containerPort: 80

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: banka-db
+  namespace: banka
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: banka-db
+  template:
+    metadata:
+      labels:
+        app: banka-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:13
+          envFrom:
+            - secretRef:
+                name: banka-db-credentials
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: banka-db-storage
+              mountPath: /var/lib/postgresql/data

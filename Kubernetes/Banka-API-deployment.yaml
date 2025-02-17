@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: banka-api
+  namespace: banka
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: banka-api
+  template:
+    metadata:
+      labels:
+        app: banka-api
+    spec:
+      containers:
+        - name: banka-api
+          image: node:18-alpine
+          envFrom:
+            - secretRef:
+                name: banka-db-credentials
+            - configMapRef:
+                name: banka-config
+          ports:
+            - containerPort: 3000

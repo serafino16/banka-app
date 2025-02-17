@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: banka-nginx-service
+  namespace: banka
+spec:
+  selector:
+    app: banka-nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
