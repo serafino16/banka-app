@@ -1,0 +1,14 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: banka-app
+  namespace: default
+spec:
+  host: banka-app
+  subsets:
+    - name: blue
+      labels:
+        version: blue
+    - name: green
+      labels:
+        version: green

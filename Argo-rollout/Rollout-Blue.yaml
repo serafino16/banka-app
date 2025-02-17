@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: banka-app
+  namespace: default
+spec:
+  replicas: 3
+  strategy:
+    blueGreen:
+      activeService: banka-app-active
+      previewService: banka-app-preview
+      autoPromotionEnabled: false
+      steps:
+        - setWeight: 50
+        - pause: {duration: 10s}
+        - setWeight: 100
+        - pause: {duration: 10s}
+  template:
+    metadata:
+      labels:
+        app: banka-app
+    spec:
+      containers:
+        - name: banka-app
+          image: "Backend.dockerfile" # Blue version of the app
+          ports:
+            - containerPort: 8080
